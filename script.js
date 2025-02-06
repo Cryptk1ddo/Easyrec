@@ -46,6 +46,13 @@ const startRecording = async () => {
         videoElement.autoplay = true;
         videoElement.draggable = true;
         document.body.appendChild(videoElement);
+        
+        videoElement.addEventListener("wheel", (event) => {
+            event.preventDefault();
+            let currentSize = parseInt(videoElement.style.width);
+            let newSize = event.deltaY < 0 ? currentSize + 10 : currentSize - 10;
+            videoElement.style.width = `${Math.max(50, Math.min(newSize, 300))}px`;
+        });
     } catch (error) {
         console.error("Error starting screen recording: ", error);
     }
